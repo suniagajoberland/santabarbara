@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santa Bárbara | Catálogo Profesional</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="sticky-top-wrapper">
+        <header class="main-header">
+            <div class="header-overlay"></div>
+            <div class="header-container">
+                <span class="company-name">Santa Bárbara</span>
+                
+                <button class="cart-trigger-btn" onclick="abrirCarrito()" aria-label="Ver carrito de compras">
+                    <span class="cart-icon">🛒</span>
+                    <span id="cart-count" class="cart-badge">0</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="filter-bar-section">
+            <div class="filter-container">
+                <div id="alphabet-filter" class="alphabet-grid">
+                    <button class="letter-btn active" onclick="filtrarPorLetra('TODOS')">Todos</button>
+                    <script>
+                        const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+                        letras.forEach(l => {
+                            document.write(`<button class="letter-btn" onclick="filtrarPorLetra('${l}')">${l}</button>`);
+                        });
+                    </script>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <main class="content-layout">
+        <div id="contenedor-secciones">
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Sincronizando inventario con Google Sheets...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p class="footer-copy">&copy; 2026 Santa Bárbara. Todos los derechos reservados.</p>
+            <div class="social-networks-group">
+                <a href="https://instagram.com" target="_blank" class="social-link instagram" aria-label="Síguenos en Instagram">
+                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6m11.9 2.25a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5M12 7a5 5 0 1 1 0 10a5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6a3 3 0 0 0 0-6Z"/></svg>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://facebook.com" target="_blank" class="social-link facebook" aria-label="Síguenos en Facebook">
+                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75Z"/></svg>
+                    <span>Facebook</span>
+                </a>
+                <a href="https://tiktok.com" target="_blank" class="social-link tiktok" aria-label="Síguenos en TikTok">
+                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17c1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.52-4.06-1.39c-.48-.36-.92-.78-1.29-1.25v6.41c-.05 2.22-1.21 4.36-3.23 5.28a6.22 6.22 0 0 1-6.73-.65a6.3a6.3 0 0 1-2.45-5.51c.18-2.9 2.41-5.46 5.31-5.7c.62-.06 1.25-.03 1.86.08v3.91c-.81-.24-1.74-.13-2.47.33a2.49 2.49 0 0 0-1.12 2.37c.14 1.43 1.48 2.5 2.91 2.33c1.32-.14 2.29-1.33 2.27-2.67C12.55 7.7 12.53 3.86 12.53.02Z"/></svg>
+                    <span>TikTok</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <aside id="carrito-panel" class="cart-overlay-panel" aria-hidden="true">
+        <div class="cart-modal-container">
+            
+            <header class="cart-modal-header">
+                <h2>Tu Pedido</h2>
+                <button class="close-panel-btn" onclick="cerrarCarrito()" aria-label="Cerrar panel">&times;</button>
+            </header>
+            
+            <div id="items-carrito" class="cart-items-wrapper">
+                <p class="empty-cart-text">El carrito está vacío</p>
+            </div>
+            
+            <footer class="cart-modal-footer">
+                <div class="total-summary-row">
+                    <span>Total General:</span>
+                    <span id="cart-total" class="total-amount-value">$0.00</span>
+                </div>
+
+                <form id="checkout-form" class="checkout-delivery-form">
+                    <h3>Datos obligatorios de facturación</h3>
+                    
+                    <div class="form-field-group">
+                        <label for="nombre-cliente">Nombre y Apellido</label>
+                        <input type="text" id="nombre-cliente" required placeholder="Ej. Juan Pérez">
+                    </div>
+
+                    <div class="form-field-group">
+                        <label for="cedula-cliente">Cédula de Identidad</label>
+                        <input type="text" id="cedula-cliente" required placeholder="Ej. V-12345678">
+                    </div>
+
+                    <div class="form-field-group">
+                        <label for="telefono-cliente">Teléfono de Contacto</label>
+                        <input type="tel" id="telefono-cliente" required placeholder="Ej. 04121234567">
+                    </div>
+
+                    <div class="form-field-group">
+                        <label for="direccion-cliente">Dirección de Envío Explícita</label>
+                        <input type="text" id="direccion-cliente" required placeholder="Ej. Urbanización Altagracia, Calle 3, Casa 12">
+                    </div>
+
+                    <button type="submit" class="btn-send-whatsapp">
+                        Procesar Orden vía WhatsApp
+                    </button>
+                </form>
+            </footer>
+
+        </div>
+    </aside>
+
+    <script src="app.js"></script>
+</body>
+</html>
